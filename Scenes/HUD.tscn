@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Contadores.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Images/cabeza.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/target.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/Pts.png" type="Texture" id=4]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="Container" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+rect_min_size = Vector2( 1880, 1040 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Feedback" type="HBoxContainer" parent="Container"]
+margin_right = 1880.0
+margin_bottom = 1040.0
+rect_min_size = Vector2( 1880, 80 )
+custom_constants/separation = 200
+
+[node name="Disparos" parent="Container/Feedback" instance=ExtResource( 1 )]
+margin_right = 483.0
+margin_bottom = 1040.0
+_imagen = ExtResource( 2 )
+_ceros = "00"
+
+[node name="Metas" parent="Container/Feedback" instance=ExtResource( 1 )]
+margin_left = 683.0
+margin_right = 1166.0
+margin_bottom = 1040.0
+_imagen = ExtResource( 3 )
+_ceros = "00"
+
+[node name="Puntos" parent="Container/Feedback" instance=ExtResource( 1 )]
+margin_left = 1366.0
+margin_right = 1849.0
+margin_bottom = 1040.0
+_imagen = ExtResource( 4 )
+_ceros = "000000"

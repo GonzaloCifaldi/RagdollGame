@@ -1,0 +1,187 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/Images/Derrota.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Images/button_normal.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Music/Sad Town.ogg" type="AudioStream" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+func _ready():
+	if Global.lost == true:
+		$Perdido.visible = true
+		$Thanks.visible = false
+	else:
+		$Perdido.visible = false
+		$Thanks.visible = true
+	pass
+
+func _input(event):
+	if event is InputEventKey && event.scancode == KEY_ESCAPE:
+		get_tree().quit()
+	pass
+
+func _on_Restart_pressed():
+	Global.nivel = 1
+	Global.lost = false
+	$Perdido.visible = false
+	$Thanks.visible = false
+	get_tree().change_scene(\"res://Scenes/Inicio.tscn\")
+	pass
+
+func _on_Exit_pressed():
+	get_tree().quit()
+	pass
+"
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Assets/Fonts/Rye-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 150
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 100
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://Assets/Fonts/Mali-Bold.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 55
+font_data = SubResource( 5 )
+
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://Assets/Fonts/Mali-Bold.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 55
+font_data = SubResource( 7 )
+
+[node name="Fin" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Fondo" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+rect_min_size = Vector2( 1920, 1080 )
+color = Color( 0.431373, 0.431373, 0.431373, 0.745098 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Label" parent="."]
+margin_top = 200.0
+margin_right = 1920.0
+margin_bottom = 400.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "GAME OVER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Perdido" type="Label" parent="."]
+visible = false
+margin_top = 700.0
+margin_right = 1920.0
+margin_bottom = 955.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "Has Perdido.
+Vuelve a intentarlo"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Thanks" type="Label" parent="."]
+visible = false
+margin_top = 700.0
+margin_right = 1920.0
+margin_bottom = 900.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "Gracias Por Jugar"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScreenButtons" type="CanvasLayer" parent="."]
+
+[node name="Botones" type="VBoxContainer" parent="ScreenButtons"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -105.0
+margin_right = 150.0
+margin_bottom = 105.0
+custom_constants/separation = 50
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="TextureButton" parent="ScreenButtons/Botones"]
+margin_right = 300.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 300, 80 )
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="Label" parent="ScreenButtons/Botones/Restart"]
+margin_right = 300.0
+margin_bottom = 80.0
+custom_fonts/font = SubResource( 6 )
+text = "RESTART"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="TextureButton" parent="ScreenButtons/Botones"]
+margin_top = 130.0
+margin_right = 300.0
+margin_bottom = 210.0
+rect_min_size = Vector2( 300, 80 )
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Label" parent="ScreenButtons/Botones/Exit"]
+margin_right = 300.0
+margin_bottom = 80.0
+custom_fonts/font = SubResource( 8 )
+text = "EXIT"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+
+[connection signal="pressed" from="ScreenButtons/Botones/Restart" to="." method="_on_Restart_pressed"]
+[connection signal="pressed" from="ScreenButtons/Botones/Exit" to="." method="_on_Exit_pressed"]

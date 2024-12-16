@@ -1,0 +1,45 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scripts/MundoPrueba4.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Body.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/FixedTable.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/FixedBody.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Molino.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Target.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Music/Cheerful Annoyance.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Images/Carpa.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Cannon.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Escenario.tscn" type="PackedScene" id=11]
+
+[node name="Mundo" type="Node"]
+script = ExtResource( 1 )
+_bullet = ExtResource( 2 )
+_fixed_body = ExtResource( 4 )
+_fixed_table = ExtResource( 3 )
+_targets = ExtResource( 6 )
+_molino = ExtResource( 5 )
+_max_posiciones = 10
+
+[node name="HUD" parent="." instance=ExtResource( 10 )]
+
+[node name="Fondo" type="Sprite" parent="."]
+position = Vector2( 960, 540 )
+texture = ExtResource( 8 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.2, 0.2, 0.2, 0.745098 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Escenario" parent="." instance=ExtResource( 11 )]
+
+[node name="Cannon" parent="." instance=ExtResource( 9 )]
+position = Vector2( 80, 1000 )
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true

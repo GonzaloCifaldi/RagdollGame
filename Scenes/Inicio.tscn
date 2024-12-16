@@ -1,0 +1,130 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Images/Apertura.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Images/button_normal.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Music/Cheerful Annoyance.ogg" type="AudioStream" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+func _input(event):
+	if event is InputEventKey && event.scancode == KEY_ESCAPE:
+		get_tree().quit()
+	pass
+
+func _on_Exit_pressed():
+	get_tree().quit()
+	pass
+
+func _on_Start_pressed():
+	get_tree().change_scene(\"res://Scenes/Mundo.tscn\")
+	pass
+"
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Assets/Fonts/Rye-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 133
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://Assets/Fonts/Mali-Bold.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 55
+font_data = SubResource( 4 )
+
+[sub_resource type="DynamicFontData" id=6]
+font_path = "res://Assets/Fonts/Mali-Bold.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 55
+font_data = SubResource( 6 )
+
+[node name="Inicio" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Fondo" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Title" type="Label" parent="."]
+margin_top = 200.0
+margin_right = 1920.0
+margin_bottom = 368.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0.0235294, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+text = "Ragdoll Game"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScreenButtons" type="CanvasLayer" parent="."]
+
+[node name="Botones" type="VBoxContainer" parent="ScreenButtons"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -214.0
+margin_right = 150.0
+margin_bottom = 214.0
+custom_constants/separation = 50
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="TextureButton" parent="ScreenButtons/Botones"]
+margin_top = 109.0
+margin_right = 300.0
+margin_bottom = 189.0
+rect_min_size = Vector2( 300, 80 )
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Label" parent="ScreenButtons/Botones/Start"]
+margin_right = 300.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 300, 80 )
+custom_fonts/font = SubResource( 5 )
+text = "START"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="TextureButton" parent="ScreenButtons/Botones"]
+margin_top = 239.0
+margin_right = 300.0
+margin_bottom = 319.0
+rect_min_size = Vector2( 300, 80 )
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Label" parent="ScreenButtons/Botones/Exit"]
+margin_right = 300.0
+margin_bottom = 80.0
+custom_fonts/font = SubResource( 7 )
+text = "EXIT"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+[connection signal="pressed" from="ScreenButtons/Botones/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="ScreenButtons/Botones/Exit" to="." method="_on_Exit_pressed"]

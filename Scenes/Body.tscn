@@ -1,0 +1,258 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://Assets/Images/brazoL.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Images/torso.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/piernaR.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/brazoR.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Images/piernaL.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Images/cabeza.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/Body.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Images/estrellaBola.png" type="Texture" id=8]
+[ext_resource path="res://Shaders/Body.shader" type="Shader" id=9]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.248062, 0.589147, 1 )
+colors = PoolColorArray( 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.490909 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+gravity = Vector3( 0, 98, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 9 )
+shader_param/aura_width = 3.0
+shader_param/aura_color = Color( 0.0235294, 0.439216, 0.580392, 1 )
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 12.0
+height = 8.0
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends RigidBody2D
+
+var type : String  = \"Body\"
+
+func set_velocity(_velocity:Vector2):
+	apply_central_impulse(_velocity)
+	pass
+"
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = ExtResource( 9 )
+shader_param/aura_width = 3.0
+shader_param/aura_color = Color( 0.0235294, 0.439216, 0.580392, 1 )
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 11.0
+height = 9.0
+
+[sub_resource type="ShaderMaterial" id=13]
+shader = ExtResource( 9 )
+shader_param/aura_width = 3.0
+shader_param/aura_color = Color( 0.0235294, 0.439216, 0.580392, 1 )
+
+[sub_resource type="CapsuleShape2D" id=14]
+radius = 5.0
+height = 24.0
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = ExtResource( 9 )
+shader_param/aura_width = 3.0
+shader_param/aura_color = Color( 0.0235294, 0.439216, 0.580392, 1 )
+
+[sub_resource type="CapsuleShape2D" id=16]
+radius = 5.0
+height = 24.0
+
+[sub_resource type="ShaderMaterial" id=17]
+shader = ExtResource( 9 )
+shader_param/aura_width = 3.0
+shader_param/aura_color = Color( 0.0235294, 0.439216, 0.580392, 1 )
+
+[sub_resource type="CapsuleShape2D" id=18]
+radius = 6.0
+height = 26.0
+
+[sub_resource type="ShaderMaterial" id=19]
+shader = ExtResource( 9 )
+shader_param/aura_width = 3.0
+shader_param/aura_color = Color( 0.0235294, 0.439216, 0.580392, 1 )
+
+[sub_resource type="CapsuleShape2D" id=20]
+radius = 6.0
+height = 26.0
+
+[node name="Body" type="RigidBody2D"]
+collision_mask = 15
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Trail" type="Particles2D" parent="."]
+position = Vector2( 0, 50 )
+scale = Vector2( 0.5, 0.5 )
+emitting = false
+amount = 32
+one_shot = true
+speed_scale = 2.0
+local_coords = false
+process_material = SubResource( 7 )
+texture = ExtResource( 8 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 8 )
+scale = Vector2( 0.5, 0.4 )
+texture = ExtResource( 2 )
+flip_v = true
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 9 )
+
+[node name="Cabeza" type="RigidBody2D" parent="."]
+position = Vector2( 0, -35.5 )
+collision_mask = 15
+script = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Cabeza"]
+material = SubResource( 11 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 6 )
+flip_v = true
+
+[node name="Collision" type="CollisionShape2D" parent="Cabeza"]
+visible = false
+position = Vector2( 0, 2 )
+shape = SubResource( 12 )
+one_way_collision_margin = 0.0
+
+[node name="PiernaDerecha" type="RigidBody2D" parent="."]
+position = Vector2( -7.5, 33 )
+collision_mask = 15
+script = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="PiernaDerecha"]
+material = SubResource( 13 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="Collision" type="CollisionShape2D" parent="PiernaDerecha"]
+visible = false
+shape = SubResource( 14 )
+
+[node name="PiernaIzquierda" type="RigidBody2D" parent="."]
+position = Vector2( 7.5, 33 )
+collision_mask = 15
+script = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="PiernaIzquierda"]
+material = SubResource( 15 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
+flip_v = true
+
+[node name="Collision" type="CollisionShape2D" parent="PiernaIzquierda"]
+visible = false
+shape = SubResource( 16 )
+
+[node name="BrazoDerecho" type="RigidBody2D" parent="."]
+position = Vector2( -19, 9 )
+collision_mask = 15
+script = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="BrazoDerecho"]
+material = SubResource( 17 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+flip_v = true
+
+[node name="Collision" type="CollisionShape2D" parent="BrazoDerecho"]
+visible = false
+shape = SubResource( 18 )
+
+[node name="BrazoIzquierdo" type="RigidBody2D" parent="."]
+position = Vector2( 19, 9 )
+collision_mask = 15
+script = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="BrazoIzquierdo"]
+material = SubResource( 19 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+flip_v = true
+
+[node name="Collision" type="CollisionShape2D" parent="BrazoIzquierdo"]
+visible = false
+shape = SubResource( 20 )
+
+[node name="BodyCabeza" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( 0, -17 )
+node_a = NodePath("../Cabeza")
+node_b = NodePath("..")
+bias = 0.9
+
+[node name="BodyBrazoDerecho" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( -12.5, -9 )
+node_a = NodePath("../BrazoDerecho")
+node_b = NodePath("..")
+bias = 0.9
+
+[node name="BodyBrazoIzquierdo" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( 12.5, -9 )
+node_a = NodePath("../BrazoIzquierdo")
+node_b = NodePath("..")
+bias = 0.9
+
+[node name="BodyPiernaDerecha" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( -7.5, 14 )
+node_a = NodePath("../PiernaDerecha")
+node_b = NodePath("..")
+bias = 0.9
+
+[node name="BodyPiernaIzquierda" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( 7.5, 14 )
+node_a = NodePath("../PiernaIzquierda")
+node_b = NodePath("..")
+bias = 0.9
+
+[node name="VanishClock" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="VanishClock" to="." method="_on_VanishClock_timeout"]
